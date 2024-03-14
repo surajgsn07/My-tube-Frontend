@@ -11,9 +11,12 @@ import {
   setIsPublished,
   resetAll,
 } from "../store/uploadSlice";
+import { publishVideo } from "../utils/videoDataFetch";
 
 const UploadVideo = () => {
   const [currentStep, setcurrentStep] = useState(1);
+  const [result, setresult] = useState("");
+  const [uploaded, setuploaded] = useState(false);
 
   const {
     register,
@@ -21,9 +24,27 @@ const UploadVideo = () => {
     formState: { errors },
   } = useForm();
   const [completed, setcompleted] = useState(false);
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async(data) => {
+    if(currentStep == 4){
+      
+      const formData = new FormData();
+      formData.append("video", data.video[0]);
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("thumbnail", data.thumbnail[0]);
+      formData.append("isPublished",data.isPublished);
+      const videoData = await publishVideo(formData);
+      if(videoData){
+        setresult("Video Uploaded Successfully ✅");
+
+      }else{
+        setresult("Something went wrong while uploading ❌")
+      }
+      setuploaded(true);
+      console.log(videoData)
+    }
   };
+
   const steps = [
     {
       name: "Video",
@@ -36,13 +57,12 @@ const UploadVideo = () => {
     },
   ];
 
+
   const [videoUploaded, setVideoUploaded] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnailUploaded, setThumbnail] = useState(false);
   const [isPublished, setIsPublished] = useState(true);
-
-  
 
   return (
     <div className="mx-auto w-min relative flex flex-col  items-center">
@@ -76,16 +96,17 @@ const UploadVideo = () => {
           </div>
         </div>
       </div>
-          
-        {/* contains form */}
+
+      {/* contains form */}
       <div className="  md::w-full flex flex-wrap">
         <form
           id="form"
+          encType="multipart/form-data"
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col w-full items-center"
         >
           <div className="w-full">
-          {/* when current step is 1. */}
+            {/* when current step is 1. */}
             {currentStep == 1 ? (
               <div className=" w-[270px] sm:w-[400px] flex flex-wrap justify-center h-[250px] border-[1px] border-white mt-2 rounded-3xl relative">
                 <div
@@ -114,7 +135,6 @@ const UploadVideo = () => {
             {/* when current step is 2 */}
             {currentStep == 2 ? (
               <div className="w-full h-min border-[1px] border-white mt-2 rounded-3xl flex justify-center items-center gap-3 flex-col p-1 sm:p-5 z-10">
-
                 <div
                   className={` p-2 w-[270px] sm:w-full  text-white border-[1px] rounded-3xl border-white flex  flex-col sm:flex-row gap-3    justify-center selection: `}
                 >
@@ -128,7 +148,7 @@ const UploadVideo = () => {
                     id="title"
                     {...register(
                       "title",
-                      { onChange: (e) => setTitle(e.target.value)},
+                      { onChange: (e) => setTitle(e.target.value) },
                       { required: true }
                     )}
                   />
@@ -194,13 +214,14 @@ const UploadVideo = () => {
                 </div>
               </div>
             ) : null}
-            
 
             {/* when current step is 4 */}
             {currentStep == 4 ? (
               <div className=" p-4 w-full h-[250px] border-[1px] border-white mt-2 gap-7 rounded-3xl flex flex-col items-center justify-center ">
                 <div className="text-white text-3xl font-bold w-full flex items-center justify-center align-middle ">
-                  <span>Video </span> <span>uploaded </span> <span>successfully </span> <span>✅</span>
+                  {/* <span>Video </span> <span>uploaded </span>{" "}
+                  <span>successfully </span> <span>✅</span> */}
+                  {uploaded ? result :"Uploading...." }
                 </div>
               </div>
             ) : null}
@@ -224,13 +245,14 @@ const UploadVideo = () => {
               }}
               className="w-full flex justify-end"
             >
-              <Button
-                className={`${currentStep === 4 ? "bg-green-500 ":null}`}
-                type={`${currentStep == 3 ? "submit" : ""}`}
-                content={`${currentStep < 3 ? "Next" : ""} ${
-                  currentStep == 3 ? "Upload" : ""
-                } ${currentStep == 4 ? "Uploaded" : ""}`}
-              />
+                <Button
+                  className={`${currentStep === 4 ? "bg-green-500 " : null}`}
+                  content={`${currentStep < 3 ? "Next" : ""} ${
+                    currentStep == 3 ? "Upload" : ""
+                  } ${currentStep == 4 ? "Uploaded" : ""}`}
+                />
+
+             
             </div>
           </div>
         </form>

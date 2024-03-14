@@ -3,7 +3,9 @@ import { mainName , request} from '../constants'
 
 const toggleSubscription = async(channelId)=>{
     try {
-        const response = await axios.get(`${request}/subscription/toggleSubscription/${channelId}`);  
+        
+        const token = localStorage.getItem('accessToken');
+        const response = await axios.get(`${request}/subscription/toggleSubscription/${channelId}` ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -13,7 +15,9 @@ const toggleSubscription = async(channelId)=>{
 
 const getUserChannelSubscribers = async(channelId)=>{
     try {
-        const response = await axios.get(`${request}/subscription/getUserChannelSubscribers/${channelId}`);  
+        
+        const token = localStorage.getItem('accessToken');
+        const response = await axios.get(`${request}/subscription/getUserChannelSubscribers/${channelId}`  ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -23,7 +27,9 @@ const getUserChannelSubscribers = async(channelId)=>{
 
 const getSubscribedChannels = async(channelId)=>{
     try {
-        const response = await axios.get(`${request}/subscription/getSubscribedChannels/${channelId}`);  
+        const token = localStorage.getItem('accessToken');
+        console.log(token)
+        const response = await axios.get(`${request}/subscription/getSubscribedChannels/${channelId}`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {

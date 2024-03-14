@@ -14,7 +14,7 @@ function Button(
 
   
   return (
-    <div className='mx-auto p-2'>
+    <div className='mx-auto'>
       <button  type={type} className={`w-${width} ${className} p-2 px-4 bg-blue-900 font-semibold text-white rounded-lg`}>
           {content}
       </button>

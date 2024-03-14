@@ -1,21 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getChannelStats } from '../utils/dashboardDataFetch';
 const Dashboard = (
     {
         
     }
 ) => {
 
+  const [data, setdata] = useState('');
+  async function getDashBoardData(){
+    const data = await getChannelStats();
+    setdata(data.data);
+  }
+
+  useEffect(() => {
+    getDashBoardData();
+  }, [])
+  
+
   const obj = [
     {
       content : "Total numbers of likes : ",
-      value:223
+      value:data.numberOfLikes 
     },{
       content : "Total numbers of comments : ",
-      value:223
+      value:data.numberOfComments
     },{
       content : "Total Numbers of Videos : ",
-      value:223
-    },
+      value: data.numberOfVideos
+    },{
+      content:"Total number of subscribers :",
+      value: data.subscribers
+    },{
+      content:"Total number of views :",
+      value: data.views
+    }
   ]
 
   return (

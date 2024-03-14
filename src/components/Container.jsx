@@ -1,34 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Videocard from "./Videocard";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser } from "../utils/userDataFetch";
+import { getCurrentUser, getUserChannelProfile } from "../utils/userDataFetch";
+import { getAVideo, getAllVideos ,getAllVideosByUserId} from "../utils/videoDataFetch";
+import { IoLogoXbox } from "react-icons/io";
+import { set } from "react-hook-form";
+import { getChannelVideos } from "../utils/dashboardDataFetch";
 
-function Container() {
-  
-  console.log(document.cookie)
+function Container(
 
+) {
+  const {username} = useParams();
+  const [videoList, setvideoList] = useState([]);
 
-
-  const { userId } = useParams();
   const status = useSelector((state) => state.auth.status);
+  const user1 = useSelector((state)=>state.auth.user);
 
-  // const user = useSelector((state)=>state.auth.user);
-  // console.log(user)
-  console.log(document.cookie.includes("accessToken"));
-  const user = async () => {
-    // const a = await getCurrentUser();
-    // console.log(a)
-  };
-  user();
+
+  const pageData = async()=>{
+    let data =[];
+    if(username){
+      const user = await getUserChannelProfile(username);
+      console.log(user.data)
+      if(user){
+        data = await  getAllVideosByUserId(user.data._id);
+        console.log(data)
+        setvideoList(data.data);
+        return;
+      }
+    }else{
+      data = await getAllVideos({p:1 , l:10});
+    }
+    console.log(Array.isArray(data.data.docs));
+    
+    setvideoList(data.data.docs);
+    return data.data.docs;
+  }
+
+  useEffect(()=>{
+    console.log(localStorage.getItem("accessToken"));
+    console.log(localStorage.getItem("refreshToken"));
+    const contains = pageData();
+    if(!contains){
+      setvideoList(contains);
+    }
+  },[])
 
   return (
-    <div className=" h-full flex gap-7 flex-wrap mx-auto">
-      <Videocard />
-      <Videocard />
-      <Videocard />
-      <Videocard />
-      <Videocard />
+    <div className="w-full h-full flex gap-7 flex-wrap mx-auto">
+      {Array.isArray(videoList) && videoList.map((video , index)=>(
+        <Videocard key={index}  data={video}/>
+      ))}
     </div>
   );
 }

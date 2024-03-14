@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const status = useSelector((state) => state.auth.status);
+  const user = useSelector((state)=>state.auth.user);
+  // console.log(user)
   return (
     <div className="h-screen ">
       <div className="text-white text-3xl flex flex-col gap-5  w-20 p-2 justify-around items-center">
@@ -19,7 +21,7 @@ const Sidebar = () => {
           </Link>{" "}
           <div className="font-semibold text-sm">Home</div>
         </div>
-        {!status ? (
+        {status ? (
           <>
             <div className="text-4xl text-violet-600 font-semibold">
               <Link to={"/home/PostTweet"}>
@@ -38,7 +40,7 @@ const Sidebar = () => {
               <div className="font-semibold text-sm">Subscribed</div>
             </div>
             <div className="flex flex-col items-center">
-              <Link to="/home/creatorProfile/:userId">
+              <Link to={`/home/creatorProfile/${user.username}`}>
                 <CgProfile />
               </Link>
               <div className="font-semibold text-sm">Profile</div>

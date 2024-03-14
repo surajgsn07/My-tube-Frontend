@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { mainName , request} from '../constants'
+import { mainName , request , token} from '../constants'
 
 const getChannelStats = async()=>{
     try {
-        const response = await axios.post(`${request}/dashboard/getChannelStats`);  
+        const response = await axios.post(`${request}/dashboard/getChannelStats`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -13,7 +13,7 @@ const getChannelStats = async()=>{
 
 const getChannelVideos = async()=>{
     try {
-        const response = await axios.post(`${request}/dashboard/getChannelVideos`);  
+        const response = await axios.post(`${request}/dashboard/getChannelVideos`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {

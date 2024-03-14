@@ -29,8 +29,11 @@ const loginUser = async(formData)=>{
 
 const logoutUser = async()=>{
     try {
+      const token = localStorage.getItem('accessToken');
+      console.log(document.cookie.includes('accessToken'))
+      // console.log(token)
         // console.log(formData)
-        const response = await axios.post(`${request}/users/logout`);  
+        const response = await axios.post(`${request}/users/logout` , {token} ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -38,10 +41,27 @@ const logoutUser = async()=>{
     }
 }
 
+
+const refreshAccessToken = async()=>{
+  try {
+      const token = localStorage.getItem('refreshToken');
+      // console.log(token)
+      // console.log(formData)
+      const response = await axios.post(`${request}/users/refreshToken`,{ headers: { Authorization: `Bearer ${token}`}});  
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching logout data:', error);
+  }
+}
+
+
+
 const changePassword = async(data)=>{
     try {
+        const token = localStorage.getItem('accessToken');
         console.log(data)
-        const response = await axios.post(`${request}/users/change-password` , data);  
+        const response = await axios.post(`${request}/users/change-password` , data ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -51,8 +71,9 @@ const changePassword = async(data)=>{
 
 const getCurrentUser = async ()=>{
     try {
+      const token = localStorage.getItem('accessToken');
         // console.log(formData)
-        const response = await axios.get(`${request}/users/current-user`);  
+        const response = await axios.get(`${request}/users/current-user`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -60,10 +81,22 @@ const getCurrentUser = async ()=>{
     }
 }
 
+const getUserById = async (userId)=>{
+  try {
+    const token = localStorage.getItem('accessToken');
+      // console.log(formData)
+      const response = await axios.get(`${request}/users/getUserById/${userId}`,{ headers: { Authorization: `Bearer ${token}`}});  
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching getUserChannel data:', error);
+  }
+}
+
 const updateAccountDetails = async(data)=>{
     try {
-        console.log(data)
-        const response = await axios.patch(`${request}/users/current-user` , data);  
+        const token = localStorage.getItem('accessToken');
+        const response = await axios.patch(`${request}/users/update-account` , data ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -73,8 +106,8 @@ const updateAccountDetails = async(data)=>{
 
 const updateUserAvatar = async (data)=>{
     try {
-        console.log(data)
-        const response = await axios.patch(`${request}/users/avatar` , data);  
+      const token = localStorage.getItem('accessToken');
+        const response = await axios.patch(`${request}/users/avatar` , data ,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -84,8 +117,8 @@ const updateUserAvatar = async (data)=>{
 
 const updateCoverImage = async(data)=>{
     try {
-        console.log(data)
-        const response = await axios.patch(`${request}/users/cover-image` , data);  
+      const token = localStorage.getItem('accessToken');
+        const response = await axios.patch(`${request}/users/cover-image` , data,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -95,8 +128,9 @@ const updateCoverImage = async(data)=>{
 
 const getUserChannelProfile = async(username)=>{
     try {
-        console.log(username)
-        const response = await axios.get(`${request}/users/c/${username}` , data);  
+      const token = localStorage.getItem('accessToken');
+        // console.log(username)
+        const response = await axios.get(`${request}/users/c/${username}`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -107,7 +141,8 @@ const getUserChannelProfile = async(username)=>{
 const getWatchHistory = async ()=>{
     try {
         // console.log(data)
-        const response = await axios.get(`${request}/users/history`);  
+      const token = localStorage.getItem('accessToken');
+        const response = await axios.get(`${request}/users/history`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -125,5 +160,7 @@ export {
     updateUserAvatar,
     updateCoverImage,
     getUserChannelProfile,
-    getWatchHistory
+    getWatchHistory,
+    refreshAccessToken,
+    getUserById
 }

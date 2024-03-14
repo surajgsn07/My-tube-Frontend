@@ -19,6 +19,12 @@ import Comment from "./components/Comment.jsx";
 import UploadVideo from "./components/UploadVideo.jsx";
 import UploadTweet from "./components/UploadTweet.jsx";
 import Subscribed from "./pages/Subscribed.jsx";
+import CommentList from "./components/CommentList.jsx";
+import UpdateTweet from "./components/UpdateTweet.jsx";
+import UpdateVideo from "./components/UpdateVideo.jsx";
+import SearchResult from "./components/SearchResult.jsx";
+import PlaylistPageOfUser from "./pages/PlaylistPageOfUser.jsx";
+import Playlist from "./components/Playlist.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,16 +48,19 @@ const router = createBrowserRouter([
             element: <Container />,
           },
           {
-            path: "/home/creatorProfile/:userId",
+            path: "/home/creatorProfile/:username",
             element: <CreatorProfile />,
             children: [
               {
-                path: "/home/creatorProfile/:userId/videos",
+                path: "/home/creatorProfile/:username/videos",
                 element: <Container />,
               },
               {
-                path: "/home/creatorProfile/:userId/tweets",
-                element: <Comment />,
+                path: "/home/creatorProfile/:username/tweets",
+                element: <CommentList />,
+              },{
+                path: "/home/creatorProfile/:username/playlists",
+                element: <PlaylistPageOfUser />,
               },
             ],
           },
@@ -74,13 +83,26 @@ const router = createBrowserRouter([
           {
             path: "/home/subscribed",
             element: <Subscribed />,
-          },
+          },{
+            path:"/home/tweets/:tweetId",
+            element:<UpdateTweet/>
+          },{
+            path:"/update/video/:videoId",
+            element:<UpdateVideo/>
+          }
         ],
       },
       {
         path: "/video/:videoId",
         element: <VideoPage />,
+      },{
+        path:"/search",
+        element:<SearchResult/>
       },
+      {
+        path: "/playlist/:playlistId",
+        element: <Playlist />,
+      }
     ],
   },
 ]);

@@ -24,8 +24,17 @@ function Signup() {
 
     const userData = await registerUser(data);
 
+
     if(userData){
-      dispatch(login(userData.data))
+      
+      localStorage.setItem('accessToken', userData.data.accessToken);
+      localStorage.setItem('refreshToken',userData.data.refreshToken);
+      const user = userData.data;
+      const obj = {
+        user
+      }
+      dispatch(login(obj));
+      // console.log(a)
       navigate('/')
     }
 

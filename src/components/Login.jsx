@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { mainName } from '../constants'
 import Logo from './Logo'
 import Inputfield from './Inputfield'
@@ -7,8 +7,9 @@ import Button from './Button';
 import axios from 'axios'
 import {registerUser , loginUser} from '../utils/userDataFetch';
 import { login, logout} from '../store/authSlice'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 function Login() {
@@ -19,14 +20,29 @@ function Login() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const onSubmit = async (data)=>{
-    console.log(data)
-    
+  const [accessToken, setaccessToken] = useState("jbkkhbm")
+  Cookies.set('accessToken', accessToken);
+  // console.log(document.cookie.includes("accessToken"));
+  const a = useSelector((state)=>state.auth.user);
 
+  useEffect(()=>{
+    
+  },[accessToken]);
+  
+  const onSubmit = async (data , e)=>{
+    e.preventDefault();
     const userdata = await loginUser(data);
     if(userdata){
-      console.log(userdata.data.user)
-      dispatch(login(userdata.data.user))
+
+      localStorage.setItem('accessToken', userdata.data.accessToken);
+      localStorage.setItem('refreshToken',userdata.data.refreshToken);
+      console.log(userdata.data.user);
+      const user = userdata.data.user;
+      const obj = {
+        user
+      }
+      dispatch(login(obj));
+      // console.log(a)
       navigate('/')
     }
 
@@ -40,7 +56,7 @@ function Login() {
         <div className='flex justify-center items-center font-semibold m-4 gap-2 text-2xl'>
             Login
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col item-center'>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col item-center gap-4'>
             <Inputfield placeholder="Enter your username" name="username" type="text" label="Username:" register={register}  required />
             <Inputfield placeholder="Enter your password" name="password" type="password" label="Password:" register={register}  required />
             <Button content='Login' type="submit"/>

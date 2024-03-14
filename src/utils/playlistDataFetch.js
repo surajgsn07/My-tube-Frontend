@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { mainName , request} from '../constants'
+import { mainName , request , token} from '../constants'
 
 const createPlaylist = async(data)=>{
     try {
-        const response = await axios.post(`${request}/playlist/createPlaylist` , data);  
+        const response = await axios.post(`${request}/playlist/createPlaylist` , data,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -13,6 +13,7 @@ const createPlaylist = async(data)=>{
 
 const getUserPlaylists = async(userId)=>{
     try {
+        console.log(userId)
         const response = await axios.get(`${request}/playlist/getUserPlaylists/${userId}`);  
         console.log(response.data);
         return response.data;
@@ -33,7 +34,7 @@ const getPlaylistById  = async(playlistId)=>{
 
 const addVideoToPlaylist = async(playlistId, videoId)=>{
     try {
-        const response = await axios.get(`${request}/playlist/addVideoToPlaylist/${playlistId}/${videoId}`);  
+        const response = await axios.get(`${request}/playlist/addVideoToPlaylist/${playlistId}/${videoId}`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -43,7 +44,7 @@ const addVideoToPlaylist = async(playlistId, videoId)=>{
 
 const removeVideoFromPlaylist = async(playlistId, videoId)=>{
     try {
-        const response = await axios.get(`${request}/playlist/removeVideoFromPlaylist/${playlistId}/${videoId}`);  
+        const response = await axios.get(`${request}/playlist/removeVideoFromPlaylist/${playlistId}/${videoId}`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -53,7 +54,7 @@ const removeVideoFromPlaylist = async(playlistId, videoId)=>{
 
 const deletePlaylist = async(playlistId)=>{
     try {
-        const response = await axios.get(`${request}/playlist/deletePlaylist/${playlistId}`);  
+        const response = await axios.get(`${request}/playlist/deletePlaylist/${playlistId}`,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
@@ -63,7 +64,7 @@ const deletePlaylist = async(playlistId)=>{
 
 const updatePlaylist = async(playlistId , data)=>{
     try {
-        const response = await axios.get(`${request}/playlist/updatePlaylist/${playlistId}` , data);  
+        const response = await axios.get(`${request}/playlist/updatePlaylist/${playlistId}` , data,{ headers: { Authorization: `Bearer ${token}`}});  
         console.log(response.data);
         return response.data;
       } catch (error) {
