@@ -50,6 +50,7 @@ function App() {
       console.log(obj)
       dispatch(login(obj));
       console.log(user1)
+      navigate('/')
     }
   
     // const toastStatus = useSelector((state)=>state.toast.status);
