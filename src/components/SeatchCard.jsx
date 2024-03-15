@@ -19,7 +19,6 @@ const SeatchCard = ({ video , owner }) => {
           <img
             className="w-6 h-6 rounded-full mr-2 object-cover"
             src={owner?.avatar}
-
             alt={`${owner.fullName}'s profile`}
           />
           <p className="text-gray-600">{owner?.fullName}</p>
