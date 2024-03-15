@@ -12,12 +12,14 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 
+
 function Login() {
 
 
   
   
   const { register, handleSubmit } = useForm();
+  const [loading, setloading] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [accessToken, setaccessToken] = useState("jbkkhbm")
@@ -30,6 +32,7 @@ function Login() {
   },[accessToken]);
   
   const onSubmit = async (data , e)=>{
+    setloading(true)
     e.preventDefault();
     const userdata = await loginUser(data);
     if(userdata){
@@ -42,6 +45,7 @@ function Login() {
         user
       }
       dispatch(login(obj));
+      setloading(false)
       // console.log(a)
       navigate('/')
     }
@@ -59,7 +63,7 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col item-center gap-4'>
             <Inputfield placeholder="Enter your username" name="username" type="text" label="Username:" register={register}  required />
             <Inputfield placeholder="Enter your password" name="password" type="password" label="Password:" register={register}  required />
-            <Button content='Login' type="submit"/>
+            <Button content='Login' className={`${loading ? "bg-gray-900" : null}`} type="submit"/>
         </form>
     </div>
   )
