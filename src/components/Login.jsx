@@ -60,7 +60,7 @@ function Login() {
         <div className='flex justify-center items-center font-semibold m-4 gap-2 text-2xl'>
             Login
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col item-center gap-4'>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col item-center gap-4 flex-wrap'>
             <Inputfield placeholder="Enter your username" name="username" type="text" label="Username:" register={register}  required />
             <Inputfield placeholder="Enter your password" name="password" type="password" label="Password:" register={register}  required />
             <Button content='Login' className={`${loading ? "bg-gray-900" : null}`} type="submit"/>

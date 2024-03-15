@@ -50,7 +50,7 @@ const NavBar = () => {
   return (
     <div className="w-full bg-black text-white  p-3 flex flex-col lg:flex-row justify-center lg:justify-between ">
       
-      <div className="flex gap-2 font-bold items-center text-xl justify-center w-full ">
+      <div className="flex mb-2 gap-2 font-bold items-center text-xl justify-center w-full ">
         <Link to={"/"} className="flex gap-2 items-center justify-center">
           <Logo /> {mainName}
         </Link>
@@ -78,7 +78,7 @@ const NavBar = () => {
         </div>
       </form>
 
-      <div className="flex  gap-7 justify-around items-center">
+      <div className="flex  gap-7 justify-around items-center ">
         {status && (
           <Link to={"/home/UploadVideo"}>
             <div className="text-3xl text-blue-90 pb-2 flex items-center justify-center">
@@ -119,7 +119,7 @@ const NavBar = () => {
             <Link to={"/login"}>
               <Button content="Login" />
             </Link>
-            <div className="pt-4">or</div>
+            <div className="pt-4 flex items-center justify-center mx-4 pb-3">or</div>
             <Link to={`/signup`}>
               <Button content="Signup" />
             </Link>
