@@ -8,7 +8,7 @@ export const reloadSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        load:(action)=>{
+        load:(state,action)=>{
             state.status = true
         },
         stopLoad:(state)=>{
