@@ -67,7 +67,7 @@ function App() {
       dispatch(logout());
       navigate('/login')
     }
-  }, [])
+  }, [loadStatus])
   
   
   return (
