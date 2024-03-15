@@ -4,6 +4,7 @@ import authReducer from './authSlice.js';
 import uploadReducer from './uploadSlice.js';
 import toastReducer from './toastSlice.js';
 import searchReducer from './SearchSlice.js'
+import reloadSlice from './reloadSlice.js';
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     upload: uploadReducer,
     toast:toastReducer,
-    search:searchReducer
+    search:searchReducer,
+    load:reloadSlice
   },
 });

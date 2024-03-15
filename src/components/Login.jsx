@@ -10,6 +10,7 @@ import { login, logout} from '../store/authSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { load, stopLoad } from '../store/reloadSlice';
 
 
 
@@ -32,7 +33,7 @@ function Login() {
   },[accessToken]);
   
   const onSubmit = async (data , e)=>{
-    setloading(true)
+    dispatch(load());
     e.preventDefault();
     const userdata = await loginUser(data);
     if(userdata){
@@ -45,7 +46,7 @@ function Login() {
         user
       }
       dispatch(login(obj));
-      setloading(false)
+      dispatch(stopLoad());
       // console.log(a)
       navigate('/')
     }

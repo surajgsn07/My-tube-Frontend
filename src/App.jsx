@@ -27,6 +27,7 @@ function App() {
   const [count, setCount] = useState(0)
   const [refresh, setrefresh] = useState(null);
   const navigate = useNavigate()
+  const loadStatus = useSelector((state)=>state.load.status)
 
   const r = async()=>{
     const a = await refreshAccessToken();
@@ -65,7 +66,6 @@ function App() {
     }else{
       dispatch(logout());
       navigate('/login')
-      
     }
   }, [])
   
@@ -74,6 +74,7 @@ function App() {
     <>
     
     <div className='relative'>
+        {loadStatus && <div className='absolute top-0 w-full bg-slate-500 font-bold '> Loading.. </div>}
         <div className=''><NavBar/></div>
         <Outlet/>
     </div>
