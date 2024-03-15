@@ -74,7 +74,7 @@ function App() {
     <>
     
     <div className='relative'>
-        {loadStatus && <div className='absolute top-0 w-full bg-slate-500 font-bold '> Loading.. </div>}
+        {loadStatus && <div className='absolute top-0 w-full text-xl flex justify-center  bg-slate-500 font-bold '> Loading.. </div>}
         <div className=''><NavBar/></div>
         <Outlet/>
     </div>
