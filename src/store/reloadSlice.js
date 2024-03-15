@@ -16,5 +16,5 @@ export const reloadSlice = createSlice({
         }
     },
 })
-export const { load, stopLoad } = authSlice.actions
+export const { load, stopLoad } = reloadSlice.actions
 export default reloadSlice.reducer
