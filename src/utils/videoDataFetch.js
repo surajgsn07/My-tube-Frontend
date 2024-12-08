@@ -1,33 +1,25 @@
-import axios from "axios";
-import { mainName, request, token } from "../constants";
+import axiosInstance from "../axios/axiosConfig"; // Assuming you have axiosInstance set up
+import { mainName, token } from "../constants";
 
-//not completed
 const getAllVideos = async ({ p, l, q, sb, st, u }) => {
   try {
-    const query = q ? q : null;
-    const page = p ? p : 1;
-    const limit = l ? l : 2;
-    const sortBy = sb ? sb : null;
-    const sortType = st ? st : null;
-    const userId = u ? u : null;
+    const query = q || null;
+    const page = p || 1;
+    const limit = l || 2;
+    const sortBy = sb || null;
+    const sortType = st || null;
+    const userId = u || null;
 
     const token = localStorage.getItem("accessToken");
     console.log(token);
 
-    const response = await axios.get(
-      `${request}/video/getAllVideos`,
-      { param: { page, limit, query, sortBy, sortType, userId } },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response) {
-      console.log(response.data);
-    } else {
-      console.log("yha h error kch ni aya vha se ");
-    }
+    const response = await axiosInstance.get("/video/getAllVideos", {
+      params: { page, limit, query, sortBy, sortType, userId },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching all videos data:", error);
@@ -36,7 +28,7 @@ const getAllVideos = async ({ p, l, q, sb, st, u }) => {
 
 const publishVideo = async (data) => {
   try {
-    const response = await axios.post(`${request}/video/publish-video`, data, {
+    const response = await axiosInstance.post("/video/publish-video", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -44,176 +36,116 @@ const publishVideo = async (data) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching publish video  data:", error);
+    console.error("Error fetching publish video data:", error);
   }
 };
 
 const getAVideo = async (videoId) => {
   try {
-    // console.log(videoId)
-    const response = await axios.get(`${request}/video/v/${videoId}`, {
+    const response = await axiosInstance.get(`/video/v/${videoId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching getting a video  data:", error);
+    console.error("Error fetching a video data:", error);
   }
 };
 
 const updateVideo = async (videoId, data) => {
   try {
-    
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json', // Assuming you are sending JSON data
-    };
-    
-
-    
-    const response = await axios.post(
-      `${request}/video/updateVideo/${videoId}`,
-      data,
-      { headers: headers }
-    );
+    const response = await axiosInstance.post(`/video/updateVideo/${videoId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching updating video data:", error);
+    console.error("Error fetching updated video data:", error);
   }
 };
 
 const deleteVideo = async (videoId) => {
   try {
-    const response = await axios.get(
-      `${request}/video/deleteVideo/${videoId}`,
-      data,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const response = await axiosInstance.delete(`/video/deleteVideo/${videoId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching deleting video data:", error);
+    console.error("Error fetching deleted video data:", error);
   }
 };
 
-const togglePublishStatus = async () => {
+const togglePublishStatus = async (videoId) => {
   try {
-    const response = await axios.get(
-      `${request}/video/togglePublishStatus/${videoId}`,
-      data,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const response = await axiosInstance.post(`/video/togglePublishStatus/${videoId}`, null, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching while toggling publish status :", error);
+    console.error("Error toggling publish status:", error);
   }
 };
 
 const getAllVideosByUserId = async (userId) => {
   try {
-    const token = localStorage.getItem("accessToken");
-    // console.log(token);
-
-    const response = await axios.get(
-      `${request}/video/getAllVideosByUserId/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response) {
-      console.log(response.data);
-    } else {
-      console.log("yha h error kch ni aya vha se ");
-    }
+    const response = await axiosInstance.get(`/video/getAllVideosByUserId/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all videos data:", error);
+    console.error("Error fetching all videos by user ID:", error);
   }
 };
 
-
-const updateThumbnail = async (videoId , data) => {
+const updateThumbnail = async (videoId, data) => {
   try {
-    const token = localStorage.getItem("accessToken");
-    // console.log(token);
-
-    const response = await axios.post(
-      `${request}/video/updateThumbnail/${videoId}`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response) {
-      console.log(response.data);
-    } else {
-      console.log("yha h error kch ni aya vha se ");
-    }
+    const response = await axiosInstance.post(`/video/updateThumbnail/${videoId}`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching updated thumbnail data:", error);
+    console.error("Error updating thumbnail data:", error);
   }
 };
-
 
 const incrementView = async (videoId) => {
   try {
-    const token = localStorage.getItem("accessToken");
-    // console.log(token);
-
-    const response = await axios.post(
-      `${request}/video/incrementView/${videoId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response) {
-      console.log(response.data);
-    } else {
-      console.log("yha h error kch ni aya vha se ");
-    }
+    const response = await axiosInstance.post(`/video/incrementView/${videoId}`, null, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching updated thumbnail data:", error);
+    console.error("Error incrementing view:", error);
   }
 };
-
 
 const searchVideos = async (data) => {
   try {
-    const token = localStorage.getItem("accessToken");
-    // console.log(token);
-
-    const response = await axios.post(
-      `${request}/video/searchVideos`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response) {
-      console.log(response.data);
-    } else {
-      console.log("yha h error kch ni aya vha se ");
-    }
+    const response = await axiosInstance.post("/video/searchVideos", data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching updated thumbnail data:", error);
+    console.error("Error searching videos:", error);
   }
 };
-
-
-
 
 export {
   getAllVideos,
@@ -225,5 +157,5 @@ export {
   getAllVideosByUserId,
   updateThumbnail,
   incrementView,
-  searchVideos
+  searchVideos,
 };

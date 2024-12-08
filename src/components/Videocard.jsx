@@ -73,11 +73,11 @@ function Videocard({ data }) {
   }, []); // Empty dependency array for mount and unmount only
 
   return (
-    <div className="w-full sm:w-[45%] relative md:w-[40%] lg:w-[30%] xl:w-[23%] max-h-full  ">
+    <div className="w-full sm:w-[45%] relative md:w-[40%] lg:w-[30%] xl:w-[23%]  ">
       {videoOwner._id === user._id ? (
             <Link to={`/update/video/${data._id}`}>
               <div
-              className="bg-gray-400 px-2 py-1 font-semibold rounded-md text-black absolute z-40 right-6 bottom-5 "
+              className="bg-gray-800 px-2 py-1 font-semibold rounded-md text-white absolute z-40 right-6 top-5 "
               onClick={() => {
                 navigate();
               }}
@@ -100,7 +100,7 @@ function Videocard({ data }) {
             {/* photo */}
             <div className="rounded-full w-6 h-6 ">
               <img
-                className="rounded-full"
+                className="rounded-full h-full w-full"
                 src={`${videoOwner.avatar}`}
                 alt=""
               />

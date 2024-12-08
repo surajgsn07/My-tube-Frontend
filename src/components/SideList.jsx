@@ -14,10 +14,10 @@ const SideList = (
     const data = await getAllVideos({p:1 , l:10});
     // console.log(Array.isArray(data.data.docs));
     
-    setvideoList(data.data.docs);
-    return data.data.docs;
+    setvideoList(data.data);
+    return data.data;
   }
-  console.log(videoList)
+  
 
   useEffect(() => {
     pageData();
@@ -26,8 +26,8 @@ const SideList = (
   
 
   return (
-    <div className={`w-full rounded-lg border-2 p-4 border-white ${className}`}>
-      {videoList.map((video , index)=>(
+    <div  className={`w-full rounded-lg border-2 p-4 border-white ${className}`}>
+      {videoList && videoList.map((video , index)=>(
         <div key={index}>
           <VideoCardList video={video} />
         </div>

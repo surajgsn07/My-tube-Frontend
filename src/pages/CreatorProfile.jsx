@@ -112,24 +112,24 @@ const CreatorProfile = ({ data }) => {
 
   return (
     <div className="w-full">
-      <div className="w-full overflow-hidden max-h-48 relative">
+      <div className="w-full overflow-hidden h-48 relative">
         {/* coverimage */}
         <img
           className="w-full object-cover h-full"
-          src={profileData && profileData.coverImage}
+          src={ profileData?.coverImage || "https://t3.ftcdn.net/jpg/05/04/28/96/240_F_504289605_zehJiK0tCuZLP2MdfFBpcJdOVxKLnXg1.jpg"}
           alt=""
         />
         <div
           onClick={() => {
             coverImage();
           }}
-          className="absolute bottom-5 right-5 text-3xl "
+          className="cursor-pointer absolute bottom-5 right-5 text-3xl "
         >
           <FaUserEdit />
         </div>
         <div
           onClick={coverImage}
-          className="text-black bg-white font-semibold absolute bottom-0 right-5"
+          className="text-black cursor-pointer bg-white font-semibold absolute bottom-0 right-5"
         >
           Edit
         </div>
@@ -145,7 +145,7 @@ const CreatorProfile = ({ data }) => {
       </div>
       <div className="lg:flex pt-5">
         {/* owner info */}
-        <div className="w-[150px] overflow-hidden rounded-full m-5 relative">
+        <div className="w-[150px] h-[150px] overflow-hidden rounded-full m-5 relative">
           <img
             className="w-full object-cover"
             src={profileData && profileData.avatar}

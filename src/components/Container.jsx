@@ -22,7 +22,6 @@ function Container(
     let data =[];
     if(username){
       const user = await getUserChannelProfile(username);
-      console.log(user.data)
       if(user){
         data = await  getAllVideosByUserId(user.data._id);
         console.log(data)
@@ -32,19 +31,14 @@ function Container(
     }else{
       data = await getAllVideos({p:1 , l:10});
     }
-    console.log(Array.isArray(data.data.docs));
     
-    setvideoList(data.data.docs);
-    return data.data.docs;
+    
+    setvideoList(data.data);
   }
 
   useEffect(()=>{
-    console.log(localStorage.getItem("accessToken"));
-    console.log(localStorage.getItem("refreshToken"));
-    const contains = pageData();
-    if(!contains){
-      setvideoList(contains);
-    }
+    console.log("first")
+   pageData();
   },[])
 
   return (

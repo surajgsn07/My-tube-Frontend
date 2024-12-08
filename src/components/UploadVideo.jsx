@@ -113,9 +113,10 @@ const UploadVideo = () => {
                   onClick={() => {
                     document.getElementById("video").click();
                   }}
-                  className="-w-full flex flex-col h-full items-center justify-center text-white text-[150px]"
+                  className="-w-full flex flex-col h-full items-center justify-center text-white text-[150px] "
                 >
-                  <MdDriveFolderUpload />
+                  
+                   {document.getElementById('video')?.value ? <div className="text-md">   document.getElementById('video')?.value </div>: <MdDriveFolderUpload />} 
                   <div className="text-lg font-bold">Upload</div>
                 </div>
                 <input
@@ -243,13 +244,13 @@ const UploadVideo = () => {
                   alert("Input not provided");
                 }
               }}
-              className="w-full flex justify-end"
+              className="w-full flex justify-end mt-4"
             >
                 <Button
-                  className={`${currentStep === 4 ? "bg-green-500 " : null}`}
+                  className={`${currentStep === 4 ?  "mt-10 bg-green-500 " : null}`}
                   content={`${currentStep < 3 ? "Next" : ""} ${
                     currentStep == 3 ? "Upload" : ""
-                  } ${currentStep == 4 ? "Uploaded" : ""}`}
+                  } ${currentStep == 4 && result ? "Uploaded" : ""}`}
                 />
 
              

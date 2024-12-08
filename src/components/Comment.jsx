@@ -72,7 +72,7 @@ const Comment = ({ data }) => {
 
   return (
     <div className="w-full flex  bg-gray-900 p-2 text-white gap-3 m-4">
-      <div className="overflow-hidden w-9 h-min mt-2 rounded-full">
+      <div className="overflow-hidden w-9  h-9 mt-2 rounded-full">
         <img className="object-fit w-full" src={avatar} alt="" />
       </div>
       <div className="pt-1">

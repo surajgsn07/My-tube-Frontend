@@ -9,6 +9,7 @@ import {registerUser} from '../utils/userDataFetch';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login, logout} from '../store/authSlice'
+import { setCookie } from '../axios/cookieFunc';
 
 
 function Signup() {
@@ -27,8 +28,8 @@ function Signup() {
 
     if(userData){
       
-      localStorage.setItem('accessToken', userData.data.accessToken);
-      localStorage.setItem('refreshToken',userData.data.refreshToken);
+      setCookie('accessToken', userData.data.accessToken);
+      setCookie('refreshToken',userData.data.refreshToken);
       const user = userData.data;
       const obj = {
         user

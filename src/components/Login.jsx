@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { load, stopLoad } from '../store/reloadSlice';
+import { setCookie } from '../axios/cookieFunc';
 
 
 
@@ -38,8 +39,9 @@ function Login() {
     const userdata = await loginUser(data);
     if(userdata){
 
-      localStorage.setItem('accessToken', userdata.data.accessToken);
-      localStorage.setItem('refreshToken',userdata.data.refreshToken);
+      
+      setCookie('accessToken', userdata.data.accessToken);
+      setCookie('refreshToken',userdata.data.refreshToken);
       console.log(userdata.data.user);
       const user = userdata.data.user;
       const obj = {

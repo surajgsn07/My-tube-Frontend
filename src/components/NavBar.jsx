@@ -13,6 +13,7 @@ import { MyContext } from "./ContextProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/authSlice";
 import { giveQuery } from "../store/SearchSlice";
+import { removeCookie } from "../axios/cookieFunc";
 
 const NavBar = () => {
   const { register, handleSubmit } = useForm();
@@ -39,8 +40,7 @@ const NavBar = () => {
   const logoutBtn = async () => {
     const logoutData = await logoutUser();
     if (logoutData) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      removeCookie('accessToken')
       dispatch(logout());
       navigate('/login')
     }
@@ -99,7 +99,7 @@ const NavBar = () => {
         {status && (
           <Link to={`/home/creatorProfile/${userData.username}`}>
             <div className="flex flex-col justify-center items-center">
-              <div className="flex items-center w-[30px] border-white text-white rounded-full overflow-hidden">
+              <div className="flex items-center w-[30px] h-[30px] border-white text-white rounded-full overflow-hidden">
                 <img
                   className="object-fit w-full h-full"
                   src={userData.avatar}

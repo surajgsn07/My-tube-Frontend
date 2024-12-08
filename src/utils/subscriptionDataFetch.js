@@ -1,44 +1,37 @@
-import axios from 'axios'
-import { mainName , request} from '../constants'
+import axiosInstance from '../axios/axiosConfig';
 
-const toggleSubscription = async(channelId)=>{
-    try {
-        
-        const token = localStorage.getItem('accessToken');
-        const response = await axios.get(`${request}/subscription/toggleSubscription/${channelId}` ,{ headers: { Authorization: `Bearer ${token}`}});  
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching while toggle subscription:', error);
-    }
-}
+const toggleSubscription = async (channelId) => {
+  try {
+    const response = await axiosInstance.get(`/subscription/toggleSubscription/${channelId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error while toggling subscription:', error);
+  }
+};
 
-const getUserChannelSubscribers = async(channelId)=>{
-    try {
-        
-        const token = localStorage.getItem('accessToken');
-        const response = await axios.get(`${request}/subscription/getUserChannelSubscribers/${channelId}`  ,{ headers: { Authorization: `Bearer ${token}`}});  
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching get user channel subscribers:', error);
-    }
-}
+const getUserChannelSubscribers = async (channelId) => {
+  try {
+    const response = await axiosInstance.get(`/subscription/getUserChannelSubscribers/${channelId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user channel subscribers:', error);
+  }
+};
 
-const getSubscribedChannels = async(channelId)=>{
-    try {
-        const token = localStorage.getItem('accessToken');
-        console.log(token)
-        const response = await axios.get(`${request}/subscription/getSubscribedChannels/${channelId}`,{ headers: { Authorization: `Bearer ${token}`}});  
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.error('Error fetching get subscribed channels:', error);
-    }
-}
+const getSubscribedChannels = async (channelId) => {
+  try {
+    const response = await axiosInstance.get(`/subscription/getSubscribedChannels/${channelId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching subscribed channels:', error);
+  }
+};
 
 export {
-    toggleSubscription,
-    getUserChannelSubscribers,
-    getSubscribedChannels
-}
+  toggleSubscription,
+  getUserChannelSubscribers,
+  getSubscribedChannels,
+};
