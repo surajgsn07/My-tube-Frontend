@@ -42,7 +42,6 @@ function Login() {
 
       
       setCookie('accessToken', userdata.data.accessToken);
-      setCookie('refreshToken',userdata.data.refreshToken);
       console.log(userdata.data.user);
       const user = userdata.data.user;
       const obj = {
