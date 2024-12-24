@@ -41,7 +41,7 @@ function Login() {
       console.log({userdata})
 
       
-      setCookie('accessToken', userdata.data.accessToken);
+      setCookie('token', userdata.data.accessToken);
       console.log(userdata.data.user);
       const user = userdata.data.user;
       const obj = {
