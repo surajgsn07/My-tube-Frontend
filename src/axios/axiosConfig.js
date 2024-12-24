@@ -4,7 +4,8 @@ import Cookie from "universal-cookie";
 import { getCookie } from './cookieFunc';
 
 const axiosInstance = axios.create({
-    baseURL:'https://my-tube-backend-raum.onrender.com/api/v1' , 
+    // baseURL:'https://my-tube-backend-raum.onrender.com/api/v1' 
+    baseURL:'http://localhost:8000/api/v1', 
     withCredentials: true, 
 });
 
