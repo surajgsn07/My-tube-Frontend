@@ -23,9 +23,9 @@ function Container(
     if(username){
       const user = await getUserChannelProfile(username);
       if(user){
-        data = await  getAllVideosByUserId(user.data._id);
+        data = await  getAllVideosByUserId(user?.data?._id);
         console.log(data)
-        setvideoList(data.data);
+        setvideoList(data?.data);
         return;
       }
     }else{
