@@ -38,6 +38,7 @@ function Login() {
     e.preventDefault();
     const userdata = await loginUser(data);
     if(userdata){
+      console.log({userdata})
 
       
       setCookie('accessToken', userdata.data.accessToken);
