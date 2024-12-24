@@ -5,6 +5,8 @@ const cookies = new Cookies(null, { path: '/' });
 export const setCookie = (key, value, daysToExpire = 7) => {
     const expires = new Date();
     expires.setDate(expires.getDate() + daysToExpire);
+
+    console.log({key , value});
     
     cookies.set(key, value, { path: '/', expires });
 }
